@@ -29,7 +29,7 @@
     ```kotlin
     class MyClass {
       // 속성 선언
-      private var property1 : String 
+      private ㅈ
        
        // 초기화 블록    
        init {
@@ -129,16 +129,16 @@
       // WRONG!
       package com.example.deep_space
       ```
- <br>
- 
+    <br>
   * **클래스와 객체의 이름은 대문자로 시작하고 카멜 케이스를 사용한다.**
       ```kotlin
       open class DeclarationProcessor { /*...*/ }
 
       object EmptyDeclarationProcessor : DeclarationProcessor() { /*...*/ }
       ```
+       <br>   
   * **함수 이름**
-    * 함수 이름은 카멜 표기법 작성되며 일반적으로 동사 또는 동사구입니다.
+    * 함수 이름은 카멜 표기법 작성한다.
       ```kotlin
       fun processDeclarations() { /*...*/ }
       var declarationCount = 1
@@ -146,16 +146,97 @@
     * 팩토리 패턴에서 팩토리 함수는 추상 반환 유형과 동일한 이름을 가질 수 있습니다.
       ```kotlin
       interface Foo { /*...*/ }
-
       class FooImpl : Foo { /*...*/ }
-
       fun Foo(): Foo { return FooImpl() }
       ```
+    <br>
+  * **테스트 메소드 이름**
+    * ```Backtick(`)```으로 감싸서 공백을 포함한 이름을 작성할 수 있다.
+    * 유의할 점은 아직 Android 런타임에서는 지원되지 않는다.
+    * 메소드 이름에 언더스코어도 허용된다.
+      ```kotlin
+      class MyTestCase {
+        @Test fun `ensure everything works`() { ... }
 
-* **테스트 메소드 이름**
-* **프로퍼티 이름**
-* **backing 프로퍼티 이름**
+        @Test fun ensureEverythingWorks_onAndroid() { ... }
+      }
+      ```
+          <br>
+  * **properties**
+    * 상수의 이름(값이 변경되지 않는 속성으로 ```const```로 표시되거나 사용자 지정 get 함수가 없는 최상위 또는 객체 ```val``` 속성)은 대문자 밑줄로 구분된 이름(```screaming snake case```)을 사용해야 합니다.
+      ```kotlin
+      const val MAX_COUNT = 8
+      val USER_NAME_FIELD = "UserName"
+      ```
+    * Top-level 또는 ```object```에 선언된 프로퍼티 중 동작이나 ```Mutable``` 데이터가 있는 객체를 다룰 경우 카멜 표기법을 따른다.
+      ```kotlin
+      val mutableCollection: MutableSet<String> = HashSet()
+      ```
+    * 싱글톤 오브젝트를 참조하는 경우 ```object``` 선언과 동일한 네이밍 스타일을 사용할 수 있다.
+      ```kotlin
+      val PersonComparator: Comparator<Person> = ...
+      ```
+    * ```Enum```의 경우 사용법에 따라 언더스코어로 구분된 대문자로 사용하거나 파스칼 표기법을 사용해도 괜찮다.
+        <br>
+  * **backing properties**
+    * 개념적으로 같은 프로퍼티이지만 하나는 클래스 외부에 공개하고 다른 하나는 내부 구현을 담을 때 private으로 선언하고 언더스코어로 작성한 뒤 공개용 프로퍼티의 getter로 할당한다.
+      ```kotlin
+      class C {
+        private val _elementList = mutableListOf<Element>()
+
+        val elementList: List<Element>
+             get() = _elementList
+      }
+      ```
+          <br>
+ * **좋은 이름 선택**
+   * 클래스의 이름은 명사 또는 명사구로 작성한다. ex) ```List```, ```PersonReader```
+   * 메소드의 이름은 동사 또는 동사구로 작성한다. ex) ```close```, ```readPersons```,```sort```, ```sorted```
+   * 이름은 목적이 명확하게 나타나야하므로 의미 없는 단어(```Manager```, ```Wrapper``` 등)를 사용하는 것은 피하자.
+   * 이름에 약어를 사용하는 경우 두 개의 문자(```IOStream```)일 때는 둘 다 대문자로 표기하고 그보다 더 긴 경우(```XmlFormatter```, ```HttpInputStream```) 파스칼 표기법으로 작성하자. 
+
 <br>
+
+# Formatting
+  * **들여쓰기(Indentation)**
+    * 들여쓰기에 탭(tab)을 사용하지 않고, 4 spaces를 사용하길 권장.
+    * 중괄호의 경우 여는 중괄호를 구문이 시작되는 줄 끝에 배치하고 닫는 중괄호를 여는 구문과 수평으로 정렬된 별도의 줄에 배치
+       ```kotlin
+       if (elements != null) {
+           for (element in elements) {
+               // ...
+           }
+       }
+       ```
+    * Kotlin에서는 세미콜론이 선택사항이므로 줄 바꿈이 중요합니다. 언어 디자인은 Java 스타일 중괄호를 가정하므로 다른 형식 지정 스타일을 사용하려고 하면 놀라운 동작이 발생할 수 있습니다.
+      <br>
+      
+  * **가로공백(Horizontal whitespace)**
+    * 이항 연산자 주위에 공백을 넣으세요 (```a + b```). 예외: "범위 연산자" 주위에는 공백을 넣지 마세요 (```0..i```).
+    * 단항 연산자 주위에 공백을 넣지 마세요 (```a++```).
+    * 제어 흐름 키워드 (```if```, ```when```, ```for```, ```while```)와 해당하는 여는 괄호 사이에 공백을 넣으세요.
+    * 기본 생성자 선언, 메소드 선언 또는 메소드 호출에서 여는 괄호 앞에 공백을 넣지 마세요.
+       ```kotlin
+       class A(val x: Int)
+       
+       fun foo(x: Int) { ... }
+       
+       fun bar() {
+           foo(1)
+       }
+       ```
+    *  ```(```, ```[```,의 뒤 ```]```, ```)```,의 앞에는 공백을 두지 않는다.
+    * ```.```이나 ```?.``` 주위에 공백을 넣지 마세요. ```foo.bar().filter { it > 2 }.joinToString(), foo?.bar()```
+    * ```//``` 뒤에 공백을 넣으세요. // 주석
+    * 타입 매개변수를 지정하는 데 사용되는  ```<>```  주위에 공백을 넣지 마세요 ```class Map<K, V> { ... }```
+    * ```::```사이에 공백을 두지 않는다. ```Foo::class, String::length```
+    * nullable 타입을 표시하는 ```?``` 앞에 공백을 넣지 마세요 ```String?```
+    * 일반적으로 어떤 종류의 수평 정렬도 피하세요. 식별자의 이름을 다른 길이의 이름으로 바꾸더라도 선언이나 사용 형식에 영향을 주어서는 안 됩니다.
+<br>
+  * **콜론(Colon)**
+
+
 
 # 참조
 * <https://developer.android.com/kotlin/style-guide?hl=ko>
+* <https://kotlinlang.org/docs/coding-conventions.html>
