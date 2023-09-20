@@ -214,14 +214,14 @@
    <br>
       
   * **가로공백(Horizontal whitespace)**
-    * 이항 연산자 주위에 공백을 넣으세요 (```a + b```). 예외: "범위 연산자" 주위에는 공백을 넣지 마세요 (```0..i```).
+    * 이항 연산자 주위에 공백을 넣으세요 (```a + b```).
+    * 범위 연산자 주위에는 공백을 넣지 마세요 (```0..i```).
     * 단항 연산자 주위에 공백을 넣지 마세요 (```a++```).
     * 제어 흐름 키워드 (```if```, ```when```, ```for```, ```while```)와 해당하는 여는 괄호 사이에 공백을 넣으세요.
         ```kotlin
          // WRONG!
          for(i in 0..1) {
          }
- 
          // Okay
          for (i in 0..1) {
          }
@@ -237,10 +237,33 @@
        }
        ```
     * ```(```, ```[```,의 뒤 ```]```, ```)```,의 앞에는 공백을 두지 않는다.
+    * 쉼표(,) 또는 콜론(:) 뒤
+       ```kotlin
+         // WRONG!
+         val oneAndTwo = listOf(1,2)
+         // Okay
+         val oneAndTwo = listOf(1, 2)
+       
+         // Okay
+         class Foo : Runnable
+
+        // WRONG!
+        if (list.isEmpty()){
+        }
+        // Okay
+        if (list.isEmpty()) {
+        }
+       ```
     * ```.```이나 ```?.``` 주위에 공백을 넣지 마세요. ```foo.bar().filter { it > 2 }.joinToString(), foo?.bar()```
     * ```//``` 뒤에 공백을 넣으세요. // 주석
     * 타입 매개변수를 지정하는 데 사용되는  ```<>```  주위에 공백을 넣지 마세요 ```class Map<K, V> { ... }```
     * ```::```사이에 공백을 두지 않는다. ```Foo::class, String::length```
+         ```kotlin
+         // WRONG!
+         val toString = Any :: toString
+         // Okay
+         val toString = Any::toString
+        ```
     * nullable 타입을 표시하는 ```?``` 앞에 공백을 넣지 마세요 ```String?```
     * 일반적으로 어떤 종류의 수평 정렬도 피하세요. 식별자의 이름을 다른 길이의 이름으로 바꾸더라도 선언이나 사용 형식에 영향을 주어서는 안 됩니다.
 <br>
@@ -261,7 +284,7 @@
       * 람다 화살표(```->```)는 앞에 오는 인수 목록에 연결된 상태로 유지됩니다.
         
   * **콜론(Colon)**
-    * 기본 클래스 또는 인터페이스를 지정하기 위해 클래스 선언에 사용된 경우나 일반 제약조건의 where 절에 사용된 경우에만 콜론(```:```) 앞에 공백.
+    * 기본 클래스 또는 인터페이스를 지정하기 위해 클래스 선언에 사용된 경우나, 일반 제약조건의 where 절에 사용된 경우에만 콜론(```:```) 앞에 공백을 두며, 콜론(```:```)뒤에는 항상 공백 .
        ```kotlin
          // WRONG!
          class Foo: Runnable
@@ -272,13 +295,12 @@
          fun <T: Comparable> max(a: T, b: T)
          // Okay
          fun <T : Comparable> max(a: T, b: T)
-       ```
-    * 쉼표(,) 또는 콜론(:) 뒤
-       ```kotlin
-         // WRONG!
-         val oneAndTwo = listOf(1,2)
-         // Okay
-         val oneAndTwo = listOf(1, 2)
+
+         class FooImpl : Foo() {
+         constructor(x: String) : this(x) { /*...*/ }
+  
+         val x = object : IFoo { /*...*/ }
+        }
        ```
 
 <details>
