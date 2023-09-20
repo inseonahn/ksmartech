@@ -7,7 +7,7 @@
     ```
     * 소스 파일에 최상위 수준 선언이 여러 개 있는 경우 파일의 콘텐츠를 설명하는 이름으로 작성.
     * 소스 파일 이름은 파스칼 표기법(```Pascal Case```)을 따른다.
-    * 파일 이름은 파일에 있는 코가 무엇을 하는지 설명해야하기 때문에  ```"Util"```과 같은 의미 없는 단어 사용을 피해야 한다.
+    * 파일 이름은 파일에 있는 코드가 무엇을 하는지 설명해야하기 때문에  ```"Util"```과 같은 의미 없는 단어 사용을 피해야 한다.
     ```kotlin
       // Bar.kt
       class Bar { }
@@ -129,13 +129,14 @@
       package com.example.deep_space
       ```
     <br>
-  * **클래스와 객체의 이름은 대문자로 시작하고 카멜 케이스를 사용한다.**
+  * **클래스(class)와 객체(object)의 이름은 대문자로 시작하고 카멜 케이스를 사용한다.**
       ```kotlin
       open class DeclarationProcessor { /*...*/ }
 
       object EmptyDeclarationProcessor : DeclarationProcessor() { /*...*/ }
       ```
        <br>   
+       
   * **함수 이름**
     * 함수 이름은 카멜 표기법 작성한다.
       ```kotlin
@@ -148,14 +149,18 @@
       class FooImpl : Foo { /*...*/ }
       fun Foo(): Foo { return FooImpl() }
       ```
+
+    * 팩토리 패턴에서 팩토리 함수는 추상 반환 유형과 동일한 이름을 가질 수 있습니다.
+
     <br>
     
   * **테스트 메소드 이름**
     * ```Backtick(`)```으로 감싸서 공백을 포함한 이름을 작성할 수 있다.
     * 유의할 점은 아직 Android 런타임에서는 지원되지 않는다.
     * 메소드 이름에 언더스코어도 허용된다.
+    * 테스트 클래스의 이름은 테스트 중인 클래스의 이름으로 시작하고 Test로 끝납니다. 예를 들면 HashTest 또는 HashIntegrationTest입니다.
       ```kotlin
-      class MyTestCase {
+      class HashTest {
         @Test fun `ensure everything works`() { ... }
 
         @Test fun ensureEverythingWorks_onAndroid() { ... }
@@ -164,11 +169,25 @@
  <br>
  
   * **properties**
-    * 상수의 이름(값이 변경되지 않는 속성으로 ```const```로 표시되거나 사용자 지정 get 함수가 없는 최상위 또는 객체 ```val``` 속성)은 대문자 밑줄로 구분된 이름(```screaming snake case```)을 사용.
+    * **값이 변경되지 않는 속성으로 ```const```로 표시되거나 사용자 지정 get 함수가 없는 최상위 또는 객체 ```val``` 속성은 대문자 밑줄로 구분된 이름(```screaming snake case```)을 사용.**
       ```kotlin
-      const val MAX_COUNT = 8
-      val USER_NAME_FIELD = "UserName"
+       const val NUMBER = 5
+       val NAMES = listOf("Alice", "Bob")
+       val AGES = mapOf("Alice" to 35, "Bob" to 32)
+       val COMMA_JOINER = Joiner.on(',') // Joiner is immutable
+       val EMPTY_ARRAY = arrayOf()
       ```
+    * **동작 또는 변경 가능한 데이터가 있는 개체를 보유하는 최상위 수준 또는 개체 속성의 이름은 카멜 케이스 이름을 사용해야 합니다. (인스턴스 속성, 로컬 속성, 매개변수)**
+      ```kotlin
+       val variable = "var"
+       val nonConstScalar = "non-const"
+       val mutableCollection: MutableSet = HashSet()
+       val mutableElements = listOf(mutableInstance)
+       val mutableValues = mapOf("Alice" to mutableInstance, "Bob" to mutableInstance2)
+       val logger = Logger.getLogger(MyClass::class.java.name)
+       val nonEmptyArray = arrayOf("these", "can", "change")
+      ```
+      
     * Top-level 또는 ```object```에 선언된 프로퍼티 중 동작이나 ```Mutable``` 데이터가 있는 객체를 다룰 경우 카멜 표기법을 따른다.
       ```kotlin
       val mutableCollection: MutableSet<String> = HashSet()
@@ -178,7 +197,7 @@
       val PersonComparator: Comparator<Person> = ...
       ```
     * ```Enum```의 경우 사용법에 따라 언더스코어로 구분된 대문자로 사용하거나 파스칼 표기법을 사용해도 괜찮다.
-        <br>
+<br>
         
   * **backing properties**
     * 개념적으로 같은 프로퍼티이지만 하나는 클래스 외부에 공개하고 다른 하나는 내부 구현을 담을 때 private으로 선언하고 언더스코어로 작성한 뒤 공개용 프로퍼티의 getter로 할당한다.
@@ -217,6 +236,7 @@
     * 이항 연산자 주위에 공백을 넣으세요 (```a + b```).
     * 범위 연산자 주위에는 공백을 넣지 마세요 (```0..i```).
     * 단항 연산자 주위에 공백을 넣지 마세요 (```a++```).
+    * ```(```, ```[```,의 뒤 ```]```, ```)```,의 앞에는 공백을 두지 않는다.
     * 제어 흐름 키워드 (```if```, ```when```, ```for```, ```while```)와 해당하는 여는 괄호 사이에 공백을 넣으세요.
         ```kotlin
          // WRONG!
@@ -236,7 +256,6 @@
            foo(1)
        }
        ```
-    * ```(```, ```[```,의 뒤 ```]```, ```)```,의 앞에는 공백을 두지 않는다.
     * 쉼표(,) 또는 콜론(:) 뒤
        ```kotlin
          // WRONG!
@@ -247,12 +266,12 @@
          // Okay
          class Foo : Runnable
 
-        // WRONG!
-        if (list.isEmpty()){
-        }
-        // Okay
-        if (list.isEmpty()) {
-        }
+         // WRONG!
+         if (list.isEmpty()){
+         }
+         // Okay
+         if (list.isEmpty()) {
+         }
        ```
     * ```.```이나 ```?.``` 주위에 공백을 넣지 마세요. ```foo.bar().filter { it > 2 }.joinToString(), foo?.bar()```
     * ```//``` 뒤에 공백을 넣으세요. // 주석
@@ -302,6 +321,35 @@
          val x = object : IFoo { /*...*/ }
         }
        ```
+       <br>
+       
+  * **Class headers(class header(매개변수, 기본 생성자 및 기타 사항 지정))**
+    * 클래스 선언은 class name, class header(매개변수, 기본 생성자 및 기타 사항 지정) 및 중괄호로 묶인 class body(바디)으로 구성된다.
+    * header와 body는 선택사항이며, 클래스에 body가 없으면 중괄호를 생략해도 된다.
+    * 헤더가 짧은 기본 생성자의 경우 클래스는 한 줄로 작성 가능
+       ```kotlin
+       class Person(id: Int, name: String)
+       ```
+    * 헤더가 긴 기본 생성자의 경우 들여 쓰기와 함께 라인으로 구분하며, 또한 닫는 소괄호 ```)```는 새로운 라인에 있어야 한다.
+       ```kotlin
+       class Person(
+         id: Int,
+         name: String,
+         surname: String
+       )
+       ```
+    * 상속을 사용하는 경우 슈퍼클래스 생성자 호출 또는 구현된 인터페이스 목록은 괄호와 같은 줄에 있어야 한다.
+       ```kotlin
+       class Person(
+           id: Int,
+           name: String,
+           surname: String
+       ) : Human(id, name) { /*...*/ }
+       ```
+    * 
+
+
+
 
 <details>
     <summary>자세히</summary>
