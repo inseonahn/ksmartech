@@ -331,11 +331,11 @@
        ```
     * 헤더가 긴 기본 생성자의 경우 들여 쓰기와 함께 라인으로 구분하며, 또한 닫는 소괄호 ```)```는 새로운 라인에 있어야 한다.
        ```kotlin
-       class Person(
-         id: Int,
-         name: String,
-         surname: String
-       )
+        class Person(
+          id: Int,
+          name: String,
+          surname: String
+        )
        ```
     * 상속을 사용하는 경우 슈퍼클래스 생성자 호출 또는 구현된 인터페이스 목록은 괄호와 같은 줄에 있어야 한다.
        ```kotlin
@@ -347,16 +347,47 @@
        ```
     * 여러 인터페이스의 경우 슈퍼클래스 생성자 호출을 먼저 찾은 다음 각 인터페이스를 다른 줄에 배치
        ```kotlin
-       class Person(
-           id: Int,
-           name: String,
-           surname: String
-       ) : Human(id, name),
-           KotlinMaker { /*...*/ }
+        class MyFavouriteVeryLongClassHolder :
+            MyLongHolder<MyFavouriteVeryLongClass>(),
+            SomeOtherInterface,
+            AndAnotherOne {
+        
+            fun foo() { /*...*/ }
+        }
        ```
+       <br>
+  * **함수(Functions)**
+   * 함수 서명이 한 줄에 들어가지 않으면 각 매개변수 선언을 한 줄에 하나씩 표시
+   * 이 형식으로 정의된 매개변수에서는 단일 들여쓰기(+4)를 사용해야하며, 닫는 괄호(```)```) 및 반환 유형은 추가 들여쓰기 없이 한 줄에 하나씩 입력
+        ```kotlin
+         fun longMethodName(
+             argument: ArgumentType = defaultValue,
+             argument2: AnotherArgumentType,
+         ): ReturnType {
+             // body
+         }
+        ```
+   * 단일 표현식으로 구성된 본문이 있는 함수는 표현식 함수 사용을 권장.
+        ```kotlin
+         fun foo(): Int {     // bad
+             return 1
+         }
+         fun foo() = 1        // good
+        ```
+   * 속성 이니셜라이저가 한 줄에 들어가지 않을 경우 등호(=) 뒤에서 줄바꿈하고 들여쓰기를 사용합니다.
+        ```kotlin
+         private val defaultCharset: Charset? =
+             EncodingRegistry.getInstance().getDefaultCharsetForPropertiesFiles(file)
+        ```
+        <br>
 
+  * **Properties**
+   * ```Read-only```의 간단한 프로퍼티의 경우 한 줄 작성 권장.
+        ```kotlin
+        val isEmpty: Boolean get() = size == 0
+        ```
 
-
+        
 <details>
     <summary>자세히</summary>
 
