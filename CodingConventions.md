@@ -52,7 +52,6 @@
        }
     }
     ```
-    
     * 메소드 선언은 관련 내용을 종합하여 위에서 아래로 클래스를 읽는 사람이 무슨 일이 일어나고 있는지 논리를 따를 수 있도록 선언한다.
     * 중첩 클래스는 해당 클래스를 사용하는 코드 다음에 선언한다.
     * 중첩 클래스가 클래스 내부에서 참조되지 않고 외부에서만 참조되는 않는 경우 companion object 다음에 선언한다.
@@ -340,14 +339,21 @@
        ```
     * 상속을 사용하는 경우 슈퍼클래스 생성자 호출 또는 구현된 인터페이스 목록은 괄호와 같은 줄에 있어야 한다.
        ```kotlin
+        class Person(
+            id: Int,
+            name: String,
+            surname: String
+        ) : Human(id, name) { /*...*/ }
+       ```
+    * 여러 인터페이스의 경우 슈퍼클래스 생성자 호출을 먼저 찾은 다음 각 인터페이스를 다른 줄에 배치
+       ```kotlin
        class Person(
            id: Int,
            name: String,
            surname: String
-       ) : Human(id, name) { /*...*/ }
+       ) : Human(id, name),
+           KotlinMaker { /*...*/ }
        ```
-    * 
-
 
 
 
