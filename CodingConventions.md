@@ -423,7 +423,67 @@
            // cleanup
        }
       ```
+   * 명령문 에서 ```when```분기가 한 줄 이상인 경우 빈 줄을 사용하여 인접한 케이스 블록과 분리 권장.
+      ```kotlin
+       private fun parsePropertyValue(propName: String, token: Token) {
+           when (token) {
+               is Token.ValueToken ->
+                   callback.visitValue(propName, token.value)
+       
+               Token.LBRACE -> { // ...
+               }
+           }
+       }
+       
+       when (foo) {
+           true -> bar() // good
+           false -> { baz() } // bad
+       }
+      ```
+<br>
 
+  * **메소드 호출**
+   * 체인된 호출을 줄 바꿈할 때는 ```.``` 문자나 ```?.``` 연산자를 다음 줄에 작성하고, 들여쓰기를 한 번 추가하세요.
+   * ```=```인수 이름과 값을 구분하는 기호 주위에 공백을 두십시오 .
+      ```kotlin
+       drawSquare(
+           x = 10, y = 10,
+           width = 100, height = 100,
+           fill = true
+       )
+      ```
+ <br>
+
+  * **체이닝 호출**
+   * 긴 인수 목록에서는 여는 괄호 뒤에 줄 바꿈을 넣습니다. 인수를 공백 4개로 들여씁니다. 밀접하게 관련된 여러 인수를 같은 줄에 그룹화합니다.
+   * =인수 이름과 값을 구분하는 기호 주위에 공백을 두십시오 .
+      ```kotlin
+      val anchor = owner
+          ?.firstChild!!
+          .siblings(forward = true)
+          .dropWhile { it is PsiComment || it is PsiWhiteSpace }
+      ```
+ <br>
+ 
+  * **람다**
+   * 중괄호(```{}```) 주위와 매개변수를 본문에서 구분하는 화살표(```>```) 주위에 공백을 사용.
+   * 여러 줄의 람다에서 매개변수 이름을 선언할 때 첫 번째 줄에 이름을 입력하고 그 뒤에 화살표와 줄 바꿈을 입력합니다.
+     ```kotlin
+      appendCommaSeparated(properties) { prop ->
+          val propertyValue = prop.get(obj)  // ...
+      }
+      ```
+
+   *  매개변수 목록이 너무 길어서 한 줄에 다 들어갈 수 없다면 화살표를 별도의 줄에 넣으세요.
+      ```kotlin
+      foo {
+         context: Context,
+         environment: Env
+         ->
+         context.configureEnv(environment)
+      }
+      ```
+<br>
 
       
 | 첫번째 열                    |           오른쪽 정렬 | 왼쪽 정렬        |     가운데정렬     |
