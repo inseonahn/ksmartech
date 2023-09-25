@@ -1,5 +1,5 @@
-# Source code organization
-  ## **소스 파일 이름**
+## 1. Source code organization
+  * ### 1.1 소스 파일 이름
     * 소스 파일에 최상위 클래스가 하나 뿐인 경우 파일 이름에 대소문자를 구분하는 이름과 ```.kt``` 확장자 반영해야 한다.
     ```kotlin
       // MyClass.kt
@@ -115,7 +115,7 @@
     ```
     <br>
 
-# Naming rules
+# 2.Naming rules
   * **패키지 이름**
     * 패키지 이름은 항상 소문자이며 언더스코어(_)를 사용하지 않는다.
     * 여러 단어로 구성된 이름을 사용하는 것은 일반적으로 권장되지 않지만, 여러 단어를 사용해야 하는 경우에는 단어를 연결하거나 카멜 표기법을 사용한다.
@@ -218,7 +218,7 @@
 
 <br>
 
-# Formatting
+# 3.Formatting
   * **들여쓰기(Indentation)**
     * 들여쓰기에 탭(tab)을 사용하지 않고, 4 spaces를 사용하길 권장.
     * 중괄호의 경우 여는 중괄호를 구문이 시작되는 줄 끝에 배치하고 닫는 중괄호를 여는 구문과 수평으로 정렬된 별도의 줄에 배치
@@ -505,6 +505,6 @@
 </details>
 
 
-# 참고
+# 참고링크
 * <https://developer.android.com/kotlin/style-guide?hl=ko>
 * <https://kotlinlang.org/docs/coding-conventions.html>
