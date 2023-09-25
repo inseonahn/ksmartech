@@ -176,6 +176,7 @@
        val COMMA_JOINER = Joiner.on(',') // Joiner is immutable
        val EMPTY_ARRAY = arrayOf()
       ```
+      
     * **동작 또는 변경 가능한 데이터가 있는 개체를 보유하는 최상위 수준 또는 개체 속성의 이름은 카멜 케이스 이름을 사용해야 합니다. (인스턴스 속성, 로컬 속성, 매개변수)**
       ```kotlin
        val variable = "var"
@@ -386,7 +387,45 @@
         ```kotlin
         val isEmpty: Boolean get() = size == 0
         ```
+   * 복잡한 프로퍼티의 경우 ```get``` 과 ```set``` 을 분리된 라인에 선언.
+      ```kotlin
+      val foo: String
+          get() { ... }      
+      ```
+   * 초기화 코드가 있는 프로퍼티의 경우, 초기화 코드가 길다면 줄바꿈 처리하여 4칸 공백 들여 쓰기 한다.
+      ```kotlin
+      private val defaultCharset: Charset? =
+          EncodingRegistry.getInstance().getDefaultCharsetForPropertiesFiles(file)      
+      ```
+<br>
 
+  * **제어문 형식**
+   *  ```if```나 ```when```과 같은 조건문이 멀티라인일 경우 항상 중괄호```{```를 실행 구문에 가깝게 둔다.
+   * 조건의 닫는 괄호```}```를 여는 중괄호와 함께 별도의 줄에 배치.
+      ```kotlin
+       if (!component.isSyncing &&
+           !hasAnyKotlinRuntimeInScope(module)
+       ) {
+           return createKotlinNotConfiguredPanel(module)
+       }
+      ```
+   * ```else```, ```catch```, ```finally``` 키워드와 ```do/while```, ```while``` 루프 키워드는 이전 중괄호 ```}```와 동일한 라인에 둔다.
+      ```kotlin
+       if (condition) {
+           // body
+       } else {
+           // else part
+       }
+       
+       try {
+           // body
+       } finally {
+           // cleanup
+       }
+      ```
+
+
+      
 | 첫번째 열                    |           오른쪽 정렬 | 왼쪽 정렬        |     가운데정렬     |
 | ---------------------------- | ---------------------:|:---------------- |:------------------:|
 | \| 사이에 내용을 입력합니다. | 오른쪽 정렬이 됩니다. | 왼쪽 정렬입니다. | 가운데 정렵입니다. |
