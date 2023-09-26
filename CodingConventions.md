@@ -115,17 +115,28 @@
     ```
     <br>
 
-# 2.Naming rules
-  * **패키지 이름**
+## 2. Naming rules
+  * ### 2.1 명명 규칙 종류
+   |                            용어                           |                                              설명                                              |           예시          |
+   |:---------------------------------------------------------:|:----------------------------------------------------------------------------------------------:|:-----------------------:|
+   |                  카멜 케이스(Camel Case)                  | 첫 글자는 소문자로 시작하여 소문자로 작성하며, 구분자를 대문자로 가지고 네이밍을 구성하는 방법 | val userId = "kst1234"  |
+   |                 파스칼 케이스(Pascal Case)                | 첫 글자는 대문자로 네이밍을 구성하는 방법                                                      | val Userid = "kst1234"  |
+   | 스네이크 케이스(Snake Case) / 팟홀 표기법 (Potholes Case) | 단어 별로 언더바(_)의 구분자를 가지고 네이밍을 구성하는 방법                                   | val user_id = "kst1234" |
+   |                  케밥 케이스 (Kebab Case)                 | 단어 별로 하이픈(-)의 구분자를 가지고 네이밍을 구성하는 방법                                   | val user-id = "kst1234" |
+   |         camel case with an uppercase first letter         | 첫 글자는 대문자로 작성하고 이후 문자는 카멜 케이스의 네이밍을 통해 구성하는 방법              | val UserId = "kst1234"  |
+   |              upper case underscore-separated              | 대문자로 구성하며 언더바(_)를 기반하여 단어 별로 구분자로 구성하는 방법                        | var USER_ID = "kst1234" |
+
+
+  * ### 2.2 패키지 이름
     * 패키지 이름은 항상 소문자이며 언더스코어(_)를 사용하지 않는다.
     * 여러 단어로 구성된 이름을 사용하는 것은 일반적으로 권장되지 않지만, 여러 단어를 사용해야 하는 경우에는 단어를 연결하거나 카멜 표기법을 사용한다.
       ```kotlin
-      // Okay
-      package com.example.deepspace
-      // WRONG!
-      package com.example.deepSpace
-      // WRONG!
-      package com.example.deep_space
+       // Okay
+       package com.example.deepspace
+       // WRONG!
+       package com.example.deepSpace
+       // WRONG!
+       package com.example.deep_space
       ```
     <br>
   * **클래스(class)와 객체(object)의 이름은 대문자로 시작하고 카멜 케이스를 사용한다.**
@@ -485,26 +496,6 @@
       ```
 <br>
 
-      
-| 첫번째 열                    |           오른쪽 정렬 | 왼쪽 정렬        |     가운데정렬     |
-| ---------------------------- | ---------------------:|:---------------- |:------------------:|
-| \| 사이에 내용을 입력합니다. | 오른쪽 정렬이 됩니다. | 왼쪽 정렬입니다. | 가운데 정렵입니다. |
-| 한줄 더 추가할 수 있습니다.  |                       |                  |                    |
-
-
-<details>
-
-
-<div markdown="1">
-    <summary>자세히</summary>
-
-<!-- summary 아래 한칸 공백 두고 내용 삽입 -->
-자세히
-</div>
-
-</details>
-
-
-# 참고링크
+## 4.참고
 * <https://developer.android.com/kotlin/style-guide?hl=ko>
 * <https://kotlinlang.org/docs/coding-conventions.html>
