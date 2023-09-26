@@ -95,19 +95,19 @@
     * 오버로딩 메서드는 서로 이웃하게(근처에) 배치한다.
     ```kotlin
     class Calculator {
-      fun sum(num1 : Int , num2 : Int) : Int {
+      fun sum(num1: Int, num2: Int) : Int {
           return num1 + num2
       }
       
-       fun sum(num1 : Int , num2 : Int, num3 : Int) : Int {
+       fun sum(num1: Int, num2: Int, num3: Int) : Int {
           return num1 + num2 + num3
       }
        
-       fun subtract(num1 : Int , num2 : Int) : Int {
+       fun subtract(num1: Int, num2: Int) : Int {
           return num1 - num2
       }
       
-       fun subtract(num1 : Int , num2 : Int, num3 : Int) : Int {
+       fun subtract(num1: Int, num2: Int, num3: Int) : Int {
           return num1 - num2 - num3
       }
     }
