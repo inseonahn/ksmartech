@@ -28,28 +28,28 @@
      
     ```kotlin
     class MyClass {
-      // 속성 선언
-      private property1: String = "Property"
-       
-       // 초기화 블록    
-       init {
-           property1 = "Property declarations and initializer blocks"
-       }
-     
-       // 보조 생성자
-       constructor(property2: String) {
-           println("Secondary constructors")
-       }
-       
-       // 메소드 선언
-       fun method() {
-           println("Method declarations")
-       }
+        // 속성 선언
+        private var property1: String
     
-       // Companion object
-       companion object {
-         var age: Int = 10
-       }
+        // 초기화 블록    
+        init {
+            property1 = "Property declarations and initializer blocks"
+        }
+    
+        // 보조 생성자
+        constructor(property2: String) {
+            println("Secondary constructors")
+        }
+    
+        // 메소드 선언
+        fun method() {
+            println("Method declarations")
+        }
+    
+        // Companion object
+        companion object {
+            var age: Int = 10
+        }
     }
     ```
     * 메소드 선언은 관련 내용을 종합하여 위에서 아래로 클래스를 읽는 사람이 무슨 일이 일어나고 있는지 논리를 따를 수 있도록 선언한다.
@@ -57,22 +57,22 @@
     * 중첩 클래스가 클래스 내부에서 참조되지 않고 외부에서만 참조되는 않는 경우 companion object 다음에 선언한다.
     ```kotlin
     class MyClass {
-       // 메소드 선언
-       fun method() {
-           println("Method declarations")
-       }
+        // 메소드 선언
+        fun method() {
+            println("Method declarations")
+        }
     
-       // 내부에서 사용된 Nested classes
-       private class NestedClass { }
-  
-       // Companion object
-       companion object {
-         var age: Int = 10
-       }
- 
-       // 외부에서 사용된 Nested classes 
-       class OuterNestedClass {}
-     }
+        // 내부에서 사용된 Nested classes
+        private class NestedClass {}
+    
+        // Companion object
+        companion object {
+            var age: Int = 10
+        }
+    
+        // 외부에서 사용된 Nested classes 
+        class OuterNestedClass {}
+    }
     ```
     <br>
 
@@ -80,15 +80,15 @@
     * 인터페이스를 구현할 때는 인터페이스의 구성원과 동일한 순서로 구현 구성원을 유지
     ```kotlin
     interface MyInterface {
-      fun methode1()
-      fun methode2()
+        fun methode1()
+        fun methode2()
     }
-
+    
     class MyClass : MyInterface {
-      override fun methode1() {}
-      override fun methode2() {}    
-      fun methode3()
-     }
+        override fun methode1() {}
+        override fun methode2() {}
+        fun methode3() {}
+    }
     ```
 
   * **오버로딩 레이아웃**
