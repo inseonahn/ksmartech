@@ -3,14 +3,14 @@
     * 소스 파일에 최상위 클래스가 하나 뿐인 경우 파일 이름에 대소문자를 구분하는 이름과 ```.kt``` 확장자 반영해야 한다.
     ```kotlin
       // MyClass.kt
-      class MyClass { }
+      class MyClass {}
     ```
     * 소스 파일에 최상위 수준 선언이 여러 개 있는 경우 파일의 콘텐츠를 설명하는 이름으로 작성.
     * 소스 파일 이름은 파스칼 표기법(```Pascal Case```)을 따른다.
     * 파일 이름은 파일에 있는 코드가 무엇을 하는지 설명해야하기 때문에  ```"Util"```과 같은 의미 없는 단어 사용을 피해야 한다.
     ```kotlin
       // Bar.kt
-      class Bar { }
+      class Bar {}
       fun Runnable.toBar(): Bar = // …
 
       // Map.kt
