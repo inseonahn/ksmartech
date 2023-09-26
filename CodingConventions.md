@@ -29,7 +29,7 @@
     ```kotlin
     class MyClass {
       // 속성 선언
-      private property1 : String = "Property"
+      private property1: String = "Property"
        
        // 초기화 블록    
        init {
@@ -37,7 +37,7 @@
        }
      
        // 보조 생성자
-       constructor(property2 : String) {
+       constructor(property2: String) {
            println("Secondary constructors")
        }
        
@@ -48,7 +48,7 @@
     
        // Companion object
        companion object {
-         var age : Int = 10
+         var age: Int = 10
        }
     }
     ```
@@ -67,7 +67,7 @@
   
        // Companion object
        companion object {
-         var age : Int = 10
+         var age: Int = 10
        }
  
        // 외부에서 사용된 Nested classes 
