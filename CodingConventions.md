@@ -1,3 +1,5 @@
+<a href="https://kotlinlang.org/docs/coding-conventions.html/" target="_blank">kotlin 공식 coding convention</a>을 한글로 번역하고 추가적으로 필요한 개념을 함께 정리한 내용입니다.
+
 ## 1. Source code organization
   * ### 1.1 소스 파일 이름
     * 소스 파일에 최상위 클래스가 하나뿐인 경우 파일 이름에 대소문자를 구분하는 이름과 ```.kt``` 확장자 반영해야 한다.
