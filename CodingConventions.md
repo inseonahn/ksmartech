@@ -132,9 +132,9 @@
     |:---------------------------------------------------------:|:----------------------------------------------------------------------------------------------:|:-----------------------:|
     |                  소스파일                  | PascalCase (파일 이름이 복수형인 경우 camelCase가 허용됨) | MyClass.kt  |
     |                 패키지명                |소문자| package com.example.deepspace  |
-    | 클래스                  | PascalCase                                   | class MyClass { } |
-    |                  객체                 | PascalCase                                   | val user-id = "kst1234" |
-    |         함수         | camelCase              | val UserId = "kst1234"  |
+    | 클래스                  | PascalCase                                   | class MyClass {} |
+    |                  객체                 | PascalCase                                   | object EmptyDeclarationProcessor {} |
+    |         함수         | camelCase              | fun processDeclarations() { /*...*/ }  |
     |              상수              | UPPER_SNAKE_CASE                        | var USER_ID = "kst1234" |
     |              매개변수              | camelCase                        | var USER_ID = "kst1234" |
     |              Backing 속성               | 대문자로 구성하며 언더바(_)를 기반하여 단어 별로 구분자로 구성하는 방법                        | var USER_ID = "kst1234" |
