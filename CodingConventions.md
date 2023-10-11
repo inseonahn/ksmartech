@@ -128,7 +128,7 @@
   * ### 2.1 명명 규칙 종류
     |                            분류                           |                                              설명                                              |           예시          |
     |:---------------------------------------------------------:|:----------------------------------------------------------------------------------------------:|:-----------------------:|
-    |                  소스파일                  | PascalCase (파일 이름이 복수형인 경우 camelCase가 허용됨) | MyClass.kt  |
+    |                  소스파일                  | PascalCase  | MyClass.kt  |
     |                 패키지명                |소문자| package com.example.deepspace  |
     | 클래스                  | PascalCase                                   | class MyClass {} |
     |                  객체                 | PascalCase                                   | object EmptyDeclarationProcessor {} |
