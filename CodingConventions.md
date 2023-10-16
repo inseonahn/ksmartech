@@ -116,6 +116,8 @@
 <br>
 
 ## 2.Formatting
+스타일가이드 적용
+
   * ### 2.1 들여쓰기(Indentation)
     * 들여쓰기에 탭(```tab```)을 사용하지 않고, ```4spaces```를 사용하길 권장한다.
     * 여는 중괄호(```{```)는 구문이 시작되는 줄 끝에 배치하고, 닫는 중괄호(```}```)는 여는 구문과 수평으로 정렬된 별도의 줄에 배치한다.
@@ -143,17 +145,7 @@
          for (i in 0..1) {
          }
        ```
-      
-    * ```else``` 또는 ```catch```는 같은 줄에서 앞에 오는 닫는 중괄호(```}```)에 공백을 넣어 구분한다.
-      ```kotlin
-      // WRONG!
-      }else {
-      }
-      // Okay
-      } else {
-      }
-       ```
-      
+
     * 기본 생성자 선언, 메소드 선언 또는 메소드 호출에서 여는 괄호(```(```) 앞에 공백을 넣지 않는다.
       ```kotlin
       class A(val x: Int)
@@ -207,15 +199,35 @@
          val x = object : IFoo { /*...*/ }
         }
        ```
+      
+    * ```=```인수 이름과 값을 구분하는 기호 주위에 공백을 넣는다.
 
-  * ### 2.1 들여쓰기(Indentation)
-    * Class headers(class header(매개변수, 기본 생성자 및 기타 사항 지정))
+
+  * ### 2.3 줄바꿈
+    * 코드의 열 제한은 100자이며, 아래 언급된 경우를 제외하고 아래 설명된 대로 이 제한을 초과하는 줄은 줄바꿈되어야 한다.
+    * 예외
+      * 열 제한을 준수할 수 없는 줄(예: KDoc의 긴 URL)
+      * ```package``` 및 ```import``` 문
+      * 잘라서 셸에 붙여넣을 수 있는 주석의 명령줄
+    * 줄바꿈 위치
+      * 우선적으로 줄바꿈은 더 높은 구문 수준에서 하는 것이 좋다.
+      * 다음과 같은 '연산자 형식' 기호에서 행을 나누면 기호 앞에서 줄바꿈이 발생한다.
+       * 점 구분자(```.```, ```?.```)
+       * 멤버 참조의 두 콜론(```::```)
+      * 메서드 또는 생성자 이름은 뒤에 오는 열린 괄호(```(```)에 연결된 상태로 유지한다.
+      * 쉼표(```,```)는 앞에 오는 토큰에 연결된 상태로 유지한다.
+      * 람다 화살표(```->```)는 앞에 오는 인수 목록에 연결된 상태로 유지한다.
+
+  * ### 2.4 Class headers
     * 클래스 선언은 class name, class header(매개변수, 기본 생성자 및 기타 사항 지정) 및 중괄호로 묶인 class body(바디)으로 구성된다.
+
     * header와 body는 선택사항이며, 클래스에 body가 없으면 중괄호를 생략해도 된다.
-    * 헤더가 짧은 기본 생성자의 경우 클래스는 한 줄로 작성 가능
-       ```kotlin
+
+    * 헤더가 짧은 기본 생성자의 경우 클래스는 한 줄로 작성 가능하다.
+      ```kotlin
        class Person(id: Int, name: String)
        ```
+      
     * 헤더가 긴 기본 생성자의 경우 들여 쓰기와 함께 라인으로 구분하며, 또한 닫는 소괄호 ```)```는 새로운 라인에 있어야 한다.
        ```kotlin
         class Person(
@@ -224,6 +236,7 @@
           surname: String
         )
        ```
+       
     * 상속을 사용하는 경우 슈퍼클래스 생성자 호출 또는 구현된 인터페이스 목록은 괄호와 같은 줄에 있어야 한다.
        ```kotlin
         class Person(
@@ -232,7 +245,8 @@
             surname: String
         ) : Human(id, name) { /*...*/ }
        ```
-    * 여러 인터페이스의 경우 슈퍼클래스 생성자 호출을 먼저 찾은 다음 각 인터페이스를 다른 줄에 배치
+       
+    * 여러 인터페이스의 경우 슈퍼클래스 생성자 호출을 먼저 찾은 다음 각 인터페이스를 다른 줄에 배치한다.
        ```kotlin
         class MyFavouriteVeryLongClassHolder :
             MyLongHolder<MyFavouriteVeryLongClass>(),
@@ -242,8 +256,156 @@
             fun foo() { /*...*/ }
         }
        ```
+
+  * ### 2.5 Functions
+    * 함수 정의가 한 줄에 되지 않는다면 각 매개변수 선언을 한 줄에 하나씩 표시한다.
+    * 이 형식으로 정의된 매개변수에서는 단일 들여쓰기(+4)를 사용해야하며, 닫는 괄호(```)```) 및 반환 유형은 추가 들여쓰기 없이 한 줄에 하나씩 입력한다.
+        ```kotlin
+         fun longMethodName(
+             argument: ArgumentType = defaultValue,
+             argument2: AnotherArgumentType,
+         ): ReturnType {
+             // body
+         }
+        ```
+        
+   * 함수에 표현식이 하나만 포함되는 경우 표현식 함수(```{}```, ```return```을 제거하고 ```=```로 표현)로 표현될 수 있다.
+        ```kotlin
+         fun foo(): Int {     // bad
+             return 1
+         }
+        
+         fun foo() = 1        // good
+        ```
+
+  * ### 2.6 Properties
+   * ```Read-only```의 간단한 프로퍼티의 경우 한 줄 작성 권장한다.
+        ```kotlin
+        val isEmpty: Boolean get() = size == 0
+        ```
+        
+   * ```get``` 또는 ```set``` 함수를 선언하는 속성은 일반 들여쓰기(+4)를 적용하여 한 줄에 하나씩 입력해야 한다.
+      ```kotlin
+      val foo: String
+          get() { ... }
+
+      var directory: File? = null
+          set(value) {
+              // …
+          }     
+      ```
+      
+   * 초기화 코드가 있는 프로퍼티의 경우 초기화 코드가 길다면 등호(```=```) 뒤에서 줄바꿈 처리하여 들여쓰기(+4) 한다.
+      ```kotlin
+      private val defaultCharset: Charset? =
+          EncodingRegistry.getInstance().getDefaultCharsetForPropertiesFiles(file)      
+      ```
+
+  * ### 2.7 제어문 형식(Control flow statements﻿)
+   *  ```if```나 ```when```과 같은 조건문이 멀티라인일 경우 항상 중괄호```{```를 실행 구문에 가깝게 둔다.
+   * 조건의 닫는 괄호```}```를 여는 중괄호와 함께 별도의 줄에 배치.
+      ```kotlin
+       if (!component.isSyncing &&
+           !hasAnyKotlinRuntimeInScope(module)
+       ) {
+           return createKotlinNotConfiguredPanel(module)
+       }
+      ```
+      
+   * ```else```, ```catch```, ```finally``` 키워드와 ```do/while```, ```while``` 루프 키워드는 이전 중괄호 ```}```와 동일한 라인에 둔다.
+      ```kotlin
+       if (condition) {
+           // body
+       } else {
+           // else part
+       }
        
-## 1. Source code organization
+       try {
+           // body
+       } finally {
+           // cleanup
+       }
+      ```
+      
+   * 명령문 에서 ```when```분기가 한 줄 이상인 경우 빈 줄을 사용하여 인접한 케이스 블록과 분리 권장한다.
+      ```kotlin
+       private fun parsePropertyValue(propName: String, token: Token) {
+           when (token) {
+               is Token.ValueToken ->
+                   callback.visitValue(propName, token.value)
+       
+               Token.LBRACE -> { // ...
+               }
+           }
+       }
+      ```
+      
+   *  짧은 분기문의 경우 ```{}``` 없이 조건과 동일한 라인에 둔다.
+       ```kotlin
+       when (foo) {
+           true -> bar() // good
+           false -> { baz() } // bad
+       }
+      ```
+
+  * ### 2.8 메소드 호출(Method calls)
+   * 긴 인수 목록에서는 여는 괄호(```(```) 뒤에 줄바꿈 한 후 들여쓰기(+4)한다.
+   * 밀접하게 관련된 여러 인수를 같은 줄에 그룹화한다.
+      ```kotlin
+       drawSquare(
+           x = 10, y = 10,
+           width = 100, height = 100,
+           fill = true
+       )
+      ```
+
+  * ### 2.9 체이닝 호출(Wrap chained calls﻿)
+    * 연결된 호출을 래핑할 때 ```.``` 또는 ```?.```는 들여 쓰기와 함께 줄 바꿈 처리한다. 
+      ```kotlin
+      val anchor = owner
+          ?.firstChild!!
+          .siblings(forward = true)
+          .dropWhile { it is PsiComment || it is PsiWhiteSpace }    
+      ```
+      
+     * 체인의 첫 번째 호출은 일반적으로 그 앞에 줄 바꿈이 있어야 하지만 코드가 그런 식으로 더 의미가 있다면 생략해도 가능하다.
+      ```kotlin
+      val anchor = owner?.firstChild!!
+          .siblings(forward = true)
+          .dropWhile { it is PsiComment || it is PsiWhiteSpace }    
+      ```
+      
+  * ### 2.10 람다(Lambdas)
+   * 중괄호(```{}```) 주위와 매개변수를 본문에서 구분하는 화살표(```->```) 주위에 공백을 넣는다.
+  
+   * 여러 줄의 람다에서 매개변수 이름을 선언할 때 첫 번째 줄에 이름을 입력하고 그 뒤에 화살표(```->```)와 줄 바꿈을 입력합니다.
+     ```kotlin
+      appendCommaSeparated(properties) { prop ->
+          val propertyValue = prop.get(obj)  // ...
+      }
+      ```
+
+   * 람다에 대한 레이블을 할당하는 경우 레이블과 여는 중괄호(```{```) 사이에 공백을 넣지 않는다.
+     ```kotlin
+     fun foo() {
+         ints.forEach lit@{
+             // ...
+         }
+     }
+      ```
+     
+   *  매개변수 목록이 너무 길어서 한 줄에 다 들어갈 수 없다면 화살표(```->```)를 별도의 줄에 넣는다.
+      ```kotlin
+      foo {
+         context: Context,
+         environment: Env
+         ->
+         context.configureEnv(environment)
+      }
+      ```
+
+
+## 3. Source code organization
   * **클래스 레이아웃**
     * 클래스는 다음의 순서로 정렬된다. 
       * 프로퍼티 선언 및 초기화 블럭
@@ -339,152 +501,6 @@
     ```
     <br>
 
-
-# 3.Formatting
-
-  * **줄바꿈**
-    * 코드의 열 제한은 100자입니다. 아래 언급된 경우를 제외하고 아래 설명된 대로 이 제한을 초과하는 줄은 줄바꿈되어야 합니다.
-    * 예외
-      * 열 제한을 준수할 수 없는 줄(예: KDoc의 긴 URL)
-      * ```package``` 및 ```import``` 문
-      * 잘라서 셸에 붙여넣을 수 있는 주석의 명령줄
-    * 줄바꿈 위치
-      * 우선적으로 줄바꿈은 더 높은 구문 수준에서 하는 것이 좋습니다. 기타 정보:
-      * 다음과 같은 '연산자 형식' 기호에서 행을 나누면 기호 앞에서 줄바꿈이 발생합니다.
-       * 점 구분자(```.```, ```?.```)
-       * 멤버 참조의 두 콜론(```::```)
-      * 메서드 또는 생성자 이름은 뒤에 오는 열린 괄호(```(```)에 연결된 상태로 유지됩니다.
-      * 쉼표(```,```)는 앞에 오는 토큰에 연결된 상태로 유지됩니다.
-      * 람다 화살표(```->```)는 앞에 오는 인수 목록에 연결된 상태로 유지됩니다.
-
-       
-  * **함수(Functions)**
-   * 함수 서명이 한 줄에 들어가지 않으면 각 매개변수 선언을 한 줄에 하나씩 표시
-   * 이 형식으로 정의된 매개변수에서는 단일 들여쓰기(+4)를 사용해야하며, 닫는 괄호(```)```) 및 반환 유형은 추가 들여쓰기 없이 한 줄에 하나씩 입력
-        ```kotlin
-         fun longMethodName(
-             argument: ArgumentType = defaultValue,
-             argument2: AnotherArgumentType,
-         ): ReturnType {
-             // body
-         }
-        ```
-   * 단일 표현식으로 구성된 본문이 있는 함수는 표현식 함수 사용을 권장.
-        ```kotlin
-         fun foo(): Int {     // bad
-             return 1
-         }
-         fun foo() = 1        // good
-        ```
-   * 속성 이니셜라이저가 한 줄에 들어가지 않을 경우 등호(=) 뒤에서 줄바꿈하고 들여쓰기를 사용합니다.
-        ```kotlin
-         private val defaultCharset: Charset? =
-             EncodingRegistry.getInstance().getDefaultCharsetForPropertiesFiles(file)
-        ```
-        <br>
-
-  * **Properties**
-   * ```Read-only```의 간단한 프로퍼티의 경우 한 줄 작성 권장.
-        ```kotlin
-        val isEmpty: Boolean get() = size == 0
-        ```
-   * 복잡한 프로퍼티의 경우 ```get``` 과 ```set``` 을 분리된 라인에 선언.
-      ```kotlin
-      val foo: String
-          get() { ... }      
-      ```
-   * 초기화 코드가 있는 프로퍼티의 경우, 초기화 코드가 길다면 줄바꿈 처리하여 4칸 공백 들여 쓰기 한다.
-      ```kotlin
-      private val defaultCharset: Charset? =
-          EncodingRegistry.getInstance().getDefaultCharsetForPropertiesFiles(file)      
-      ```
-<br>
-
-  * **제어문 형식**
-   *  ```if```나 ```when```과 같은 조건문이 멀티라인일 경우 항상 중괄호```{```를 실행 구문에 가깝게 둔다.
-   * 조건의 닫는 괄호```}```를 여는 중괄호와 함께 별도의 줄에 배치.
-      ```kotlin
-       if (!component.isSyncing &&
-           !hasAnyKotlinRuntimeInScope(module)
-       ) {
-           return createKotlinNotConfiguredPanel(module)
-       }
-      ```
-   * ```else```, ```catch```, ```finally``` 키워드와 ```do/while```, ```while``` 루프 키워드는 이전 중괄호 ```}```와 동일한 라인에 둔다.
-      ```kotlin
-       if (condition) {
-           // body
-       } else {
-           // else part
-       }
-       
-       try {
-           // body
-       } finally {
-           // cleanup
-       }
-      ```
-   * 명령문 에서 ```when```분기가 한 줄 이상인 경우 빈 줄을 사용하여 인접한 케이스 블록과 분리 권장.
-      ```kotlin
-       private fun parsePropertyValue(propName: String, token: Token) {
-           when (token) {
-               is Token.ValueToken ->
-                   callback.visitValue(propName, token.value)
-       
-               Token.LBRACE -> { // ...
-               }
-           }
-       }
-       
-       when (foo) {
-           true -> bar() // good
-           false -> { baz() } // bad
-       }
-      ```
-<br>
-
-  * **메소드 호출**
-   * 체인된 호출을 줄 바꿈할 때는 ```.``` 문자나 ```?.``` 연산자를 다음 줄에 작성하고, 들여쓰기를 한 번 추가하세요.
-   * ```=```인수 이름과 값을 구분하는 기호 주위에 공백을 두십시오 .
-      ```kotlin
-       drawSquare(
-           x = 10, y = 10,
-           width = 100, height = 100,
-           fill = true
-       )
-      ```
- <br>
-
-  * **체이닝 호출**
-   * 긴 인수 목록에서는 여는 괄호 뒤에 줄 바꿈을 넣습니다. 인수를 공백 4개로 들여씁니다. 밀접하게 관련된 여러 인수를 같은 줄에 그룹화합니다.
-   * =인수 이름과 값을 구분하는 기호 주위에 공백을 두십시오 .
-      ```kotlin
-      val anchor = owner
-          ?.firstChild!!
-          .siblings(forward = true)
-          .dropWhile { it is PsiComment || it is PsiWhiteSpace }
-      ```
- <br>
- 
-  * **람다**
-   * 중괄호(```{}```) 주위와 매개변수를 본문에서 구분하는 화살표(```>```) 주위에 공백을 사용.
-   * 여러 줄의 람다에서 매개변수 이름을 선언할 때 첫 번째 줄에 이름을 입력하고 그 뒤에 화살표와 줄 바꿈을 입력합니다.
-     ```kotlin
-      appendCommaSeparated(properties) { prop ->
-          val propertyValue = prop.get(obj)  // ...
-      }
-      ```
-
-   *  매개변수 목록이 너무 길어서 한 줄에 다 들어갈 수 없다면 화살표를 별도의 줄에 넣으세요.
-      ```kotlin
-      foo {
-         context: Context,
-         environment: Env
-         ->
-         context.configureEnv(environment)
-      }
-      ```
-<br>
 
 ## 4.참고
 * <https://developer.android.com/kotlin/style-guide?hl=ko>
