@@ -1,4 +1,5 @@
 <a href="https://kotlinlang.org/docs/coding-conventions.html/" target="_blank">kotlin 공식 coding convention</a>을 한글로 번역하고 필요한 개념을 함께 정리한 내용입니다.
+Kotlin 공식 문서의 Coding Convention과 Android Kotlin Guides를 따른다.
 
 ## 1. Naming rules
   * 클래스의 이름은 명사 또는 명사구로 작성한다. ex) ```List```, ```PersonReader```
@@ -116,7 +117,9 @@
 <br>
 
 ## 2.Formatting
-스타일가이드 적용
+*Google kotlin code Style 적용.
+ - 옵션 > Editor > Code Style > Kotlin > 우측 set from > kotlin style guide click
+ - 옵션 > Editor > Inspections > Style issues >  File is not formatted according to project settings ( click to the check box )
 
   * ### 2.1 들여쓰기(Indentation)
     * 들여쓰기에 탭(```tab```)을 사용하지 않고, ```4spaces```를 사용하길 권장한다.
