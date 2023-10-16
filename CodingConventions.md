@@ -1,5 +1,29 @@
 <a href="https://kotlinlang.org/docs/coding-conventions.html/" target="_blank">kotlin 공식 coding convention</a>을 한글로 번역하고 추가적으로 필요한 개념을 함께 정리한 내용입니다.
 
+## 1. Naming rules
+  * ### 표기법 종류
+    
+    |          종류          |          설명          |          예시          |
+    |:-----------------------:|:-----------------------:|:-----------------------:|
+    | 카멜 케이스(CamelCase)   | 소문자로 시작하고 이어지는 단어들의 시작은 대문자로 작성하는 방식 | val userId = "kst1234"  |
+    | 파스칼 케이스(PascalCase) | 모든 단어에서 첫 글자를 대문자로 쓰는 방식                        | val UserId = "kst1234"  |
+    | 스네이크 케이스(SnakeCase)| 소문자만 사용하고, 각 단어의 사이에 언더바(_)를 넣어서 쓰는 방식      | val user_id = "kst1234" |
+
+  * ### 명명 규칙 종류
+    |                            분류                           |                                              설명                                              |           예시          |
+    |:---------------------------------------------------------:|:----------------------------------------------------------------------------------------------:|:-----------------------:|
+    |                  소스파일                  | PascalCase  | MyClass.kt  |
+    |                 패키지명                |소문자| package com.example.deepspace  |
+    | 클래스                  | PascalCase                                   | class MyClass {} |
+    |                  객체                 | PascalCase                                   | object EmptyDeclarationProcessor {} |
+    |         함수         | camelCase              | fun processDeclarations() { /*...*/ }  |
+    |              상수              | UPPER_SNAKE_CASE                        | var USER_ID = "kst1234" |
+    |              매개변수              | camelCase                        | var USER_ID = "kst1234" |
+    |              Backing 속성               | 대문자로 구성하며 언더바(_)를 기반하여 단어 별로 구분자로 구성하는 방법                        | var USER_ID = "kst1234" |
+
+
+  * ### 1.3 소스파일
+
 ## 1. Source code organization
   * ### 1.1 소스 파일 이름
     * 소스 파일에 최상위 클래스가 하나뿐인 경우 파일 이름에 대소문자를 구분하는 이름과 ```.kt``` 확장자 반영해야 한다.
@@ -117,26 +141,6 @@
     <br>
 
 ## 2. Naming rules
-  * ### 2.1 명명 규칙
-    |                            용어                           |                                              설명                                              |           예시          |
-    |:---------------------------------------------------------:|:----------------------------------------------------------------------------------------------:|:-----------------------:|
-    |                  카멜 케이스(Camel Case)                  | 첫 글자는 소문자로 시작하여 소문자로 작성하며, 구분자를 대문자로 가지고 네이밍을 구성하는 방법 | val userId = "kst1234"  |
-    |                 파스칼 케이스(Pascal Case)                | 첫 글자는 대문자로 네이밍을 구성하는 방법                                                      | val UserId = "kst1234"  |
-    | 스네이크 케이스(Snake Case) / 팟홀 표기법 (Potholes Case) | 단어 별로 언더바(_)의 구분자를 가지고 네이밍을 구성하는 방법                                   | val user_id = "kst1234" |
-
-
-  * ### 2.1 명명 규칙 종류
-    |                            분류                           |                                              설명                                              |           예시          |
-    |:---------------------------------------------------------:|:----------------------------------------------------------------------------------------------:|:-----------------------:|
-    |                  소스파일                  | PascalCase  | MyClass.kt  |
-    |                 패키지명                |소문자| package com.example.deepspace  |
-    | 클래스                  | PascalCase                                   | class MyClass {} |
-    |                  객체                 | PascalCase                                   | object EmptyDeclarationProcessor {} |
-    |         함수         | camelCase              | fun processDeclarations() { /*...*/ }  |
-    |              상수              | UPPER_SNAKE_CASE                        | var USER_ID = "kst1234" |
-    |              매개변수              | camelCase                        | var USER_ID = "kst1234" |
-    |              Backing 속성               | 대문자로 구성하며 언더바(_)를 기반하여 단어 별로 구분자로 구성하는 방법                        | var USER_ID = "kst1234" |
-
 
 
   * ### 2.2 패키지 이름
