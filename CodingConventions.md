@@ -1,38 +1,95 @@
 <a href="https://kotlinlang.org/docs/coding-conventions.html/" target="_blank">kotlin 공식 coding convention</a>을 한글로 번역하고 추가적으로 필요한 개념을 함께 정리한 내용입니다.
 
 ## 1. Naming rules
-  * ### 표기법 종류
-    
-    |          종류          |          설명          |          예시          |
-    |:-----------------------:|:-----------------------:|:-----------------------:|
-    | 카멜 케이스(CamelCase)   | 소문자로 시작하고 이어지는 단어들의 시작은 대문자로 작성하는 방식 | val userId = "kst1234"  |
-    | 파스칼 케이스(PascalCase) | 모든 단어에서 첫 글자를 대문자로 쓰는 방식                        | val UserId = "kst1234"  |
-    | 스네이크 케이스(SnakeCase)| 소문자만 사용하고, 각 단어의 사이에 언더바(_)를 넣어서 쓰는 방식      | val user_id = "kst1234" |
-
-  * ### 명명 규칙 종류
-    |                            분류                           |                                              설명                                              |           예시          |
-    |:---------------------------------------------------------:|:----------------------------------------------------------------------------------------------:|:-----------------------:|
-    |                  소스파일                  | PascalCase  | MyClass.kt  |
-    |                 패키지명                |소문자| package com.example.deepspace  |
-    | 클래스                  | PascalCase                                   | class MyClass {} |
-    |                  객체                 | PascalCase                                   | object EmptyDeclarationProcessor {} |
-    |         함수         | camelCase              | fun processDeclarations() { /*...*/ }  |
-    |              상수              | UPPER_SNAKE_CASE                        | var USER_ID = "kst1234" |
-    |              매개변수              | camelCase                        | var USER_ID = "kst1234" |
-    |              Backing 속성               | 대문자로 구성하며 언더바(_)를 기반하여 단어 별로 구분자로 구성하는 방법                        | var USER_ID = "kst1234" |
-
-
-  * ### 1.3 소스파일
-
-## 1. Source code organization
-  * ### 1.1 소스 파일 이름
+  * ### 1.1 소스파일
+    * 소스 파일 이름은 파스칼 표기법(```Pascal Case```)을 따른다.
     * 소스 파일에 최상위 클래스가 하나뿐인 경우 파일 이름에 대소문자를 구분하는 이름과 ```.kt``` 확장자 반영해야 한다.
-    ```kotlin
+      ```kotlin
       // MyClass.kt
       class MyClass {}
-    ```
+      ```
+
+  * ### 1.2 패키지명
+    * 패키지 이름은 항상 소문자이며 언더스코어(```_```)를 사용하지 않는다.
+    * 여러 단어로 구성된 이름을 사용하는 것은 일반적으로 권장되지 않지만,
+      여러 단어를 사용해야 하는 경우에는 단어를 연결하거나 카멜 표기법(```Camel Case```)을 사용한다.
+      ```kotlin
+       // Okay
+       package com.example.deepspace
+       // WRONG!
+       package com.example.deepSpace
+       // WRONG!
+       package com.example.deep_space
+      ```
+      
+  * ### 1.3 클래스(class)와 객체(object)
+    * 클래스 이름은 파스칼 표기법(```Pascal Case```)으로 작성되며 일반적으로 명사 또는 명사구를 사용한다.
+      ```kotlin
+      open class DeclarationProcessor { /*...*/ }
+
+      object EmptyDeclarationProcessor : DeclarationProcessor() { /*...*/ }
+      ```
+
+  * ### 1.4 함수 이름
+    * 함수 이름은 카멜 표기법(```camel Case```)으로 작성되며, 일반적으로 동사 또는 동사구를 사용한다. 
+      ```kotlin
+      fun processDeclarations() { /*...*/ }
+      var declarationCount = 1
+      ```
+      
+       > 팩토리 패턴에서 팩토리 함수는 추상 반환 유형과 동일한 이름을 가질 수 있다. 
+         ```kotlin
+         interface Foo { /*...*/ }
+         class FooImpl : Foo { /*...*/ }
+         fun Foo(): Foo { return FooImpl() }
+         ```
+
+  * ### 1.5 프로퍼티
+    * ```const```로 선언된 프로퍼티나 Top-level 또는 ```object```에 선언된 ```val```은 대문자 밑줄로 구분된 스크림 스네이크 케이스(```screaming snake case```)로 작성한다.
+      ```kotlin
+      const val MAX_COUNT = 8
+      val USER_NAME_FIELD = "UserName"
+      object {
+           val USER_NAME_FIELD = "UserName"
+      }
+      ```
+    * Top-level 또는 ```object```에 선언된 프로퍼티 중 동작이나 ```Mutable``` 데이터가 있는 객체를 다룰 경우 카멜 표기법(```camel Case```)을 따른다.
+      ```kotlin
+      val mutableCollection: MutableSet<String> = HashSet()
+      ```
+    * 싱글톤 오브젝트에 대한 레퍼런스를 가지는 프로퍼티의 경우 ```object``` 선언과 동일한 네이밍 스타일을 사용할 수 있다.
+      ```kotlin
+      val PersonComparator: Comparator<Person> = ...
+      ```
+    * ```Enum```의 경우 사용법에 따라 스크림 스네이크 케이스(```screaming snake case```)로 사용하거나 파스칼 표기법(```Pascal Case```)을 사용해도 괜찮다.
+    * 인스턴스 속성, 로컬 속성, 매개변수는 카멜 표기법(```camel Case```)을 따른다.
+      ```kotlin
+       val variable = "var"
+       val nonConstScalar = "non-const"
+       val mutableCollection: MutableSet = HashSet()
+       val mutableElements = listOf(mutableInstance)
+       val mutableValues = mapOf("Alice" to mutableInstance, "Bob" to mutableInstance2)
+       val logger = Logger.getLogger(MyClass::class.java.name)
+       val nonEmptyArray = arrayOf("these", "can", "change")
+      ```
+
+  * ### 1.6 테스트 메소드 이름
+    * ```Backtick(`)```으로 감싸서 공백을 포함한 이름을 작성할 수 있다.
+    * 메소드 이름에 언더스코어도 허용된다.
+    * 테스트 클래스의 이름은 테스트 중인 클래스의 이름으로 시작하고 Test로 끝난다.
+      ```kotlin
+      class HashTest {
+        @Test fun `ensure everything works`() { ... }
+
+        @Test fun ensureEverythingWorks_onAndroid() { ... }
+      }
+      ```
+    * 아직 Android 런타임에서는 지원되지 않는다.
+      
+## 1. Source code organization
+  * ### 1.1 소스 파일 이름
+
     * 소스 파일에 최상위 수준 선언이 여러 개 있는 경우 파일의 콘텐츠를 설명하는 이름으로 작성.
-    * 소스 파일 이름은 파스칼 표기법(```Pascal Case```)을 따른다.
     * 파일 이름은 파일에 있는 코드가 무엇을 하는지 설명해야 하기 때문에  ```"Util"```과 같은 의미 없는 단어 사용을 피해야 한다.
     ```kotlin
       // Bar.kt
@@ -141,89 +198,7 @@
     <br>
 
 ## 2. Naming rules
-
-
-  * ### 2.2 패키지 이름
-    * 패키지 이름은 항상 소문자이며 언더스코어(_)를 사용하지 않는다.
-    * 여러 단어로 구성된 이름을 사용하는 것은 일반적으로 권장되지 않지만, 여러 단어를 사용해야 하는 경우에는 단어를 연결하거나 카멜 표기법을 사용한다.
-    ```kotlin
-       // Okay
-       package com.example.deepspace
-       // WRONG!
-       package com.example.deepSpace
-       // WRONG!
-       package com.example.deep_space
-    ```
-    
-  * ### 2.3 클래스(class)와 객체(object)
-    * 이름은 대문자로 시작하고 카멜 케이스()를 사용한다.
-      ```kotlin
-      open class DeclarationProcessor { /*...*/ }
-
-      object EmptyDeclarationProcessor : DeclarationProcessor() { /*...*/ }
-      ```
-      
-  * ### 2.4 함수 이름
-    * 함수 이름은 카멜 표기법 작성한다.
-      ```kotlin
-      fun processDeclarations() { /*...*/ }
-      var declarationCount = 1
-      ```
-    * 팩토리 패턴에서 팩토리 함수는 추상 반환 유형과 동일한 이름을 가질 수 있습니다.
-      ```kotlin
-      interface Foo { /*...*/ }
-      class FooImpl : Foo { /*...*/ }
-      fun Foo(): Foo { return FooImpl() }
-      ```
-    * 팩토리 패턴에서 팩토리 함수는 추상 반환 유형과 동일한 이름을 가질 수 있습니다.
-
-  * ### 2.5 테스트 메소드 이름
-    * ```Backtick(`)```으로 감싸서 공백을 포함한 이름을 작성할 수 있다.
-    * 유의할 점은 아직 Android 런타임에서는 지원되지 않는다.
-    * 메소드 이름에 언더스코어도 허용된다.
-    * 테스트 클래스의 이름은 테스트 중인 클래스의 이름으로 시작하고 Test로 끝납니다. 예를 들면 HashTest 또는 HashIntegrationTest입니다.
-      ```kotlin
-      class HashTest {
-        @Test fun `ensure everything works`() { ... }
-
-        @Test fun ensureEverythingWorks_onAndroid() { ... }
-      }
-      ```
-      
-  * ### 2.6 properties
-    * 값이 변경되지 않는 속성으로 ```const```로 표시되거나 사용자 지정 get 함수가 없는 최상위 또는 객체 ```val``` 속성은 대문자 밑줄로 구분된 이름(```screaming snake case```)을 사용.
-      ```kotlin
-      const val NUMBER = 5
-      val NAMES = listOf("Alice", "Bob")
-      val AGES = mapOf("Alice" to 35, "Bob" to 32)
-      val COMMA_JOINER = Joiner.on(',') // Joiner is immutable
-      val EMPTY_ARRAY = arrayOf()
-      ```
-      
-    * 동작 또는 변경 가능한 데이터가 있는 개체를 보유하는 최상위 수준 또는 개체 속성의 이름은 카멜 케이스 이름을 사용해야 합니다. (인스턴스 속성, 로컬 속성, 매개변수)
-      ```kotlin
-       val variable = "var"
-       val nonConstScalar = "non-const"
-       val mutableCollection: MutableSet = HashSet()
-       val mutableElements = listOf(mutableInstance)
-       val mutableValues = mapOf("Alice" to mutableInstance, "Bob" to mutableInstance2)
-       val logger = Logger.getLogger(MyClass::class.java.name)
-       val nonEmptyArray = arrayOf("these", "can", "change")
-      ```
-      
-    * Top-level 또는 ```object```에 선언된 프로퍼티 중 동작이나 ```Mutable``` 데이터가 있는 객체를 다룰 경우 카멜 표기법을 따른다.
-      ```kotlin
-      val mutableCollection: MutableSet<String> = HashSet()
-      ```
-      
-    * 싱글톤 오브젝트를 참조하는 경우 ```object``` 선언과 동일한 네이밍 스타일을 사용할 수 있다.
-      ```kotlin
-      val PersonComparator: Comparator<Person> = ...
-      ```
-      
-    * ```Enum```의 경우 사용법에 따라 언더스코어로 구분된 대문자로 사용하거나 파스칼 표기법을 사용해도 괜찮다.
-<br>
-        
+ 
   * ### 2.7 backing properties
     * 개념적으로 같은 프로퍼티이지만 하나는 클래스 외부에 공개하고 다른 하나는 내부 구현을 담을 때 private으로 선언하고 언더스코어로 작성한 뒤 공개용 프로퍼티의 getter로 할당한다.
       ```kotlin
@@ -513,3 +488,9 @@
 ## 4.참고
 * <https://developer.android.com/kotlin/style-guide?hl=ko>
 * <https://kotlinlang.org/docs/coding-conventions.html>
+* 표기법 종류  
+    |          종류          |          설명          |          예시          |
+    |:-----------------------:|:-----------------------:|:-----------------------:|
+    | 카멜 케이스(Camel Case)   | 소문자로 시작하고 이어지는 단어들의 시작은 대문자로 작성하는 방식 | val userId = "kst1234"  |
+    | 파스칼 케이스(Pascal Case) | 모든 단어에서 첫 글자를 대문자로 쓰는 방식                        | val UserId = "kst1234"  |
+    | 스네이크 케이스(Snake Case)| 소문자만 사용하고, 각 단어의 사이에 언더바(_)를 넣어서 쓰는 방식      | val user_id = "kst1234" |
