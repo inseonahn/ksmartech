@@ -1,15 +1,25 @@
-<a href="https://kotlinlang.org/docs/coding-conventions.html/" target="_blank">kotlin 공식 coding convention</a>을 한글로 번역하고 추가적으로 필요한 개념을 함께 정리한 내용입니다.
+<a href="https://kotlinlang.org/docs/coding-conventions.html/" target="_blank">kotlin 공식 coding convention</a>을 한글로 번역하고 필요한 개념을 함께 정리한 내용입니다.
 
 ## 1. Naming rules
-  * ### 1.1 소스파일
+  * 클래스의 이름은 명사 또는 명사구로 작성한다. ex) ```List```, ```PersonReader```
+  * 메소드의 이름은 동사 또는 동사구로 작성한다. ex) ```close```, ```readPersons```,```sort```, ```sorted```
+  * 이름은 목적이 명확하게 나타나야하므로 의미 없는 단어(```Manager```, ```Wrapper``` 등)를 사용하는 것은 피하자.
+  * 이름에 약어를 사용하는 경우 두 개의 문자(```IOStream```)일 때는 둘 다 대문자로 표기하고 그보다 더 긴 경우(```XmlFormatter```, ```HttpInputStream```) 파스칼 표기법(```Pascal Case```)으로 작성하자. 
+
+  * ### 1.1 Source files
     * 소스 파일 이름은 파스칼 표기법(```Pascal Case```)을 따른다.
     * 소스 파일에 최상위 클래스가 하나뿐인 경우 파일 이름에 대소문자를 구분하는 이름과 ```.kt``` 확장자 반영해야 한다.
+    * 소스 파일에 최상위 수준 선언이 여러 개 있는 경우 파일의 콘텐츠를 설명하는 이름으로 작성한다.
       ```kotlin
       // MyClass.kt
       class MyClass {}
-      ```
 
-  * ### 1.2 패키지명
+      // Map.kt
+      fun <T, O> Set<T>.map(func: (T) -> O): List<O> = // …
+      fun <T, O> List<T>.map(func: (T) -> O): List<O> = // …
+      ```
+      
+  * ### 1.2 Package Names
     * 패키지 이름은 항상 소문자이며 언더스코어(```_```)를 사용하지 않는다.
     * 여러 단어로 구성된 이름을 사용하는 것은 일반적으로 권장되지 않지만,
       여러 단어를 사용해야 하는 경우에는 단어를 연결하거나 카멜 표기법(```Camel Case```)을 사용한다.
@@ -30,7 +40,7 @@
       object EmptyDeclarationProcessor : DeclarationProcessor() { /*...*/ }
       ```
 
-  * ### 1.4 함수 이름
+  * ### 1.4 Function
     * 함수 이름은 카멜 표기법(```camel Case```)으로 작성되며, 일반적으로 동사 또는 동사구를 사용한다. 
       ```kotlin
       fun processDeclarations() { /*...*/ }
@@ -44,7 +54,7 @@
          fun Foo(): Foo { return FooImpl() }
          ```
 
-  * ### 1.5 프로퍼티
+  * ### 1.5 properties
     * ```const```로 선언된 프로퍼티나 Top-level 또는 ```object```에 선언된 ```val```은 대문자 밑줄로 구분된 스크림 스네이크 케이스(```screaming snake case```)로 작성한다.
       ```kotlin
       const val MAX_COUNT = 8
@@ -53,15 +63,19 @@
            val USER_NAME_FIELD = "UserName"
       }
       ```
+      
     * Top-level 또는 ```object```에 선언된 프로퍼티 중 동작이나 ```Mutable``` 데이터가 있는 객체를 다룰 경우 카멜 표기법(```camel Case```)을 따른다.
       ```kotlin
       val mutableCollection: MutableSet<String> = HashSet()
       ```
+      
     * 싱글톤 오브젝트에 대한 레퍼런스를 가지는 프로퍼티의 경우 ```object``` 선언과 동일한 네이밍 스타일을 사용할 수 있다.
       ```kotlin
       val PersonComparator: Comparator<Person> = ...
       ```
+      
     * ```Enum```의 경우 사용법에 따라 스크림 스네이크 케이스(```screaming snake case```)로 사용하거나 파스칼 표기법(```Pascal Case```)을 사용해도 괜찮다.
+      
     * 인스턴스 속성, 로컬 속성, 매개변수는 카멜 표기법(```camel Case```)을 따른다.
       ```kotlin
        val variable = "var"
@@ -73,7 +87,21 @@
        val nonEmptyArray = arrayOf("these", "can", "change")
       ```
 
-  * ### 1.6 테스트 메소드 이름
+  * ### 1.6 Backing properties
+    * 클래스에 개념적으로 동일하지만 하나는 공개 API의 일부이고 다른 하나는 구현 세부 사항인 두 개의 속성이 있는 경우 비공개 속성 이름의 접두사로 언더스코어(```_```)를 사용한다.
+      ```kotlin
+      private var _table: Map? = null
+      
+      val table: Map
+          get() {
+              if (_table == null) {
+                  _table = HashMap()
+              }
+              return _table ?: throw AssertionError()
+          }
+      ```
+
+  * ### 1.7 test methods﻿
     * ```Backtick(`)```으로 감싸서 공백을 포함한 이름을 작성할 수 있다.
     * 메소드 이름에 언더스코어도 허용된다.
     * 테스트 클래스의 이름은 테스트 중인 클래스의 이름으로 시작하고 Test로 끝난다.
@@ -85,23 +113,137 @@
       }
       ```
     * 아직 Android 런타임에서는 지원되지 않는다.
+<br>
+
+## 2.Formatting
+  * ### 2.1 들여쓰기(Indentation)
+    * 들여쓰기에 탭(```tab```)을 사용하지 않고, ```4spaces```를 사용하길 권장한다.
+    * 여는 중괄호(```{```)는 구문이 시작되는 줄 끝에 배치하고, 닫는 중괄호(```}```)는 여는 구문과 수평으로 정렬된 별도의 줄에 배치한다.
+      ```kotlin
+       if (elements != null) {
+           for (element in elements) {
+               // ...
+           }
+       }
+      ```
+       
+  * ### 2.2 가로공백(Horizontal whitespace)
+    * 이항 연산자 주위에 공백을 넣는다. (```a + b```).
       
+    * 범위 연산자 주위에는 공백을 넣지 않는다. (```0..i```).
+      
+    * 단항 연산자 주위에 공백을 넣지 않는다. (```a++```).
+            
+    * 제어 흐름 키워드 (```if```, ```when```, ```for```, ```while```)와 해당하는 여는 괄호(```(```) 사이에 공백을 넣는다.
+      ```kotlin
+         // WRONG!
+         for(i in 0..1) {
+         }
+         // Okay
+         for (i in 0..1) {
+         }
+       ```
+      
+    * ```else``` 또는 ```catch```는 같은 줄에서 앞에 오는 닫는 중괄호(```}```)에 공백을 넣어 구분한다.
+      ```kotlin
+      // WRONG!
+      }else {
+      }
+      // Okay
+      } else {
+      }
+       ```
+      
+    * 기본 생성자 선언, 메소드 선언 또는 메소드 호출에서 여는 괄호(```(```) 앞에 공백을 넣지 않는다.
+      ```kotlin
+      class A(val x: Int)
+       
+      fun foo(x: Int) { ... }
+       
+      fun bar() {
+         foo(1)
+      }
+       ```
+      
+    * 쉼표(```,```) 뒤에 공백을 넣는다.
+      ```kotlin
+         // WRONG!
+         val oneAndTwo = listOf(1,2)
+         // Okay
+         val oneAndTwo = listOf(1, 2)
+       ```
+      
+    * ```.```이나 ```?.``` 주위에 공백을 넣지 않는다. ```foo.bar().filter { it > 2 }.joinToString(), foo?.bar()```
+
+    * ```//``` 뒤에 공백을 넣는다. ```// 주석```
+
+    * 타입 매개변수를 지정하는 데 사용되는  ```<>```  주위에 공백을 넣지 않는다. ```class Map<K, V> { ... }```
+
+    * ```::```사이에 공백을 넣지 않는다.
+      ```kotlin
+         // WRONG!
+         val toString = Any :: toString
+         // Okay
+         val toString = Any::toString
+       ```
+      
+    * nullable 타입을 표시하는 ```?``` 앞에 공백을 넣지 않는다. ```String?```
+
+    * 기본 클래스 또는 인터페이스를 지정하기 위해 클래스 선언에 사용된 경우나, 일반 제약조건의 ```where``` 절에 사용된 경우에만 콜론(```:```) 앞에 공백을 넣으며 콜론(```:```)뒤에는 항상 공백 넣는다.
+      ```kotlin
+         // WRONG!
+         class Foo: Runnable
+         // Okay
+         class Foo : Runnable
+
+         // WRONG!
+         fun <T: Comparable> max(a: T, b: T)
+         // Okay
+         fun <T : Comparable> max(a: T, b: T)
+
+         class FooImpl : Foo() {
+         constructor(x: String) : this(x) { /*...*/ }
+  
+         val x = object : IFoo { /*...*/ }
+        }
+       ```
+
+  * ### 2.1 들여쓰기(Indentation)
+    * Class headers(class header(매개변수, 기본 생성자 및 기타 사항 지정))
+    * 클래스 선언은 class name, class header(매개변수, 기본 생성자 및 기타 사항 지정) 및 중괄호로 묶인 class body(바디)으로 구성된다.
+    * header와 body는 선택사항이며, 클래스에 body가 없으면 중괄호를 생략해도 된다.
+    * 헤더가 짧은 기본 생성자의 경우 클래스는 한 줄로 작성 가능
+       ```kotlin
+       class Person(id: Int, name: String)
+       ```
+    * 헤더가 긴 기본 생성자의 경우 들여 쓰기와 함께 라인으로 구분하며, 또한 닫는 소괄호 ```)```는 새로운 라인에 있어야 한다.
+       ```kotlin
+        class Person(
+          id: Int,
+          name: String,
+          surname: String
+        )
+       ```
+    * 상속을 사용하는 경우 슈퍼클래스 생성자 호출 또는 구현된 인터페이스 목록은 괄호와 같은 줄에 있어야 한다.
+       ```kotlin
+        class Person(
+            id: Int,
+            name: String,
+            surname: String
+        ) : Human(id, name) { /*...*/ }
+       ```
+    * 여러 인터페이스의 경우 슈퍼클래스 생성자 호출을 먼저 찾은 다음 각 인터페이스를 다른 줄에 배치
+       ```kotlin
+        class MyFavouriteVeryLongClassHolder :
+            MyLongHolder<MyFavouriteVeryLongClass>(),
+            SomeOtherInterface,
+            AndAnotherOne {
+        
+            fun foo() { /*...*/ }
+        }
+       ```
+       
 ## 1. Source code organization
-  * ### 1.1 소스 파일 이름
-
-    * 소스 파일에 최상위 수준 선언이 여러 개 있는 경우 파일의 콘텐츠를 설명하는 이름으로 작성.
-    * 파일 이름은 파일에 있는 코드가 무엇을 하는지 설명해야 하기 때문에  ```"Util"```과 같은 의미 없는 단어 사용을 피해야 한다.
-    ```kotlin
-      // Bar.kt
-      class Bar {}
-      fun Runnable.toBar(): Bar = // …
-
-      // Map.kt
-      fun <T, O> Set<T>.map(func: (T) -> O): List<O> = // …
-      fun <T, O> List<T>.map(func: (T) -> O): List<O> = // …
-    ```
-    <br>
-
   * **클래스 레이아웃**
     * 클래스는 다음의 순서로 정렬된다. 
       * 프로퍼티 선언 및 초기화 블럭
@@ -197,95 +339,8 @@
     ```
     <br>
 
-## 2. Naming rules
- 
-  * ### 2.7 backing properties
-    * 개념적으로 같은 프로퍼티이지만 하나는 클래스 외부에 공개하고 다른 하나는 내부 구현을 담을 때 private으로 선언하고 언더스코어로 작성한 뒤 공개용 프로퍼티의 getter로 할당한다.
-      ```kotlin
-      class C {
-        private val _elementList = mutableListOf<Element>()
-
-        val elementList: List<Element>
-             get() = _elementList
-      }
-      ```
-
-  * ### 2.8 좋은 이름 선택
-   * 클래스의 이름은 명사 또는 명사구로 작성한다. ex) ```List```, ```PersonReader```
-   * 메소드의 이름은 동사 또는 동사구로 작성한다. ex) ```close```, ```readPersons```,```sort```, ```sorted```
-   * 이름은 목적이 명확하게 나타나야하므로 의미 없는 단어(```Manager```, ```Wrapper``` 등)를 사용하는 것은 피하자.
-   * 이름에 약어를 사용하는 경우 두 개의 문자(```IOStream```)일 때는 둘 다 대문자로 표기하고 그보다 더 긴 경우(```XmlFormatter```, ```HttpInputStream```) 파스칼 표기법으로 작성하자. 
-
-<br>
 
 # 3.Formatting
-  * **들여쓰기(Indentation)**
-    * 들여쓰기에 탭(tab)을 사용하지 않고, 4 spaces를 사용하길 권장.
-    * 중괄호의 경우 여는 중괄호를 구문이 시작되는 줄 끝에 배치하고 닫는 중괄호를 여는 구문과 수평으로 정렬된 별도의 줄에 배치
-       ```kotlin
-       if (elements != null) {
-           for (element in elements) {
-               // ...
-           }
-       }
-       ```
-    * Kotlin에서는 세미콜론이 선택사항이므로 줄 바꿈이 중요합니다. 언어 디자인은 Java 스타일 중괄호를 가정하므로 다른 형식 지정 스타일을 사용하려고 하면 놀라운 동작이 발생할 수 있습니다.
-   <br>
-      
-  * **가로공백(Horizontal whitespace)**
-    * 이항 연산자 주위에 공백을 넣으세요 (```a + b```).
-    * 범위 연산자 주위에는 공백을 넣지 마세요 (```0..i```).
-    * 단항 연산자 주위에 공백을 넣지 마세요 (```a++```).
-    * ```(```, ```[```,의 뒤 ```]```, ```)```,의 앞에는 공백을 두지 않는다.
-    * 제어 흐름 키워드 (```if```, ```when```, ```for```, ```while```)와 해당하는 여는 괄호 사이에 공백을 넣으세요.
-        ```kotlin
-         // WRONG!
-         for(i in 0..1) {
-         }
-         // Okay
-         for (i in 0..1) {
-         }
-       ```
-    * 기본 생성자 선언, 메소드 선언 또는 메소드 호출에서 여는 괄호 앞에 공백을 넣지 마세요.
-       ```kotlin
-       class A(val x: Int)
-       
-       fun foo(x: Int) { ... }
-       
-       fun bar() {
-           foo(1)
-       }
-       ```
-    * 쉼표(,) 또는 콜론(:) 뒤
-       ```kotlin
-         // WRONG!
-         val oneAndTwo = listOf(1,2)
-         // Okay
-         val oneAndTwo = listOf(1, 2)
-       
-         // Okay
-         class Foo : Runnable
-
-         // WRONG!
-         if (list.isEmpty()){
-         }
-         // Okay
-         if (list.isEmpty()) {
-         }
-       ```
-    * ```.```이나 ```?.``` 주위에 공백을 넣지 마세요. ```foo.bar().filter { it > 2 }.joinToString(), foo?.bar()```
-    * ```//``` 뒤에 공백을 넣으세요. // 주석
-    * 타입 매개변수를 지정하는 데 사용되는  ```<>```  주위에 공백을 넣지 마세요 ```class Map<K, V> { ... }```
-    * ```::```사이에 공백을 두지 않는다. ```Foo::class, String::length```
-         ```kotlin
-         // WRONG!
-         val toString = Any :: toString
-         // Okay
-         val toString = Any::toString
-        ```
-    * nullable 타입을 표시하는 ```?``` 앞에 공백을 넣지 마세요 ```String?```
-    * 일반적으로 어떤 종류의 수평 정렬도 피하세요. 식별자의 이름을 다른 길이의 이름으로 바꾸더라도 선언이나 사용 형식에 영향을 주어서는 안 됩니다.
-<br>
 
   * **줄바꿈**
     * 코드의 열 제한은 100자입니다. 아래 언급된 경우를 제외하고 아래 설명된 대로 이 제한을 초과하는 줄은 줄바꿈되어야 합니다.
@@ -301,62 +356,8 @@
       * 메서드 또는 생성자 이름은 뒤에 오는 열린 괄호(```(```)에 연결된 상태로 유지됩니다.
       * 쉼표(```,```)는 앞에 오는 토큰에 연결된 상태로 유지됩니다.
       * 람다 화살표(```->```)는 앞에 오는 인수 목록에 연결된 상태로 유지됩니다.
-        
-  * **콜론(Colon)**
-    * 기본 클래스 또는 인터페이스를 지정하기 위해 클래스 선언에 사용된 경우나, 일반 제약조건의 where 절에 사용된 경우에만 콜론(```:```) 앞에 공백을 두며, 콜론(```:```)뒤에는 항상 공백 .
-       ```kotlin
-         // WRONG!
-         class Foo: Runnable
-         // Okay
-         class Foo : Runnable
 
-         // WRONG!
-         fun <T: Comparable> max(a: T, b: T)
-         // Okay
-         fun <T : Comparable> max(a: T, b: T)
-
-         class FooImpl : Foo() {
-         constructor(x: String) : this(x) { /*...*/ }
-  
-         val x = object : IFoo { /*...*/ }
-        }
-       ```
-       <br>
        
-  * **Class headers(class header(매개변수, 기본 생성자 및 기타 사항 지정))**
-    * 클래스 선언은 class name, class header(매개변수, 기본 생성자 및 기타 사항 지정) 및 중괄호로 묶인 class body(바디)으로 구성된다.
-    * header와 body는 선택사항이며, 클래스에 body가 없으면 중괄호를 생략해도 된다.
-    * 헤더가 짧은 기본 생성자의 경우 클래스는 한 줄로 작성 가능
-       ```kotlin
-       class Person(id: Int, name: String)
-       ```
-    * 헤더가 긴 기본 생성자의 경우 들여 쓰기와 함께 라인으로 구분하며, 또한 닫는 소괄호 ```)```는 새로운 라인에 있어야 한다.
-       ```kotlin
-        class Person(
-          id: Int,
-          name: String,
-          surname: String
-        )
-       ```
-    * 상속을 사용하는 경우 슈퍼클래스 생성자 호출 또는 구현된 인터페이스 목록은 괄호와 같은 줄에 있어야 한다.
-       ```kotlin
-        class Person(
-            id: Int,
-            name: String,
-            surname: String
-        ) : Human(id, name) { /*...*/ }
-       ```
-    * 여러 인터페이스의 경우 슈퍼클래스 생성자 호출을 먼저 찾은 다음 각 인터페이스를 다른 줄에 배치
-       ```kotlin
-        class MyFavouriteVeryLongClassHolder :
-            MyLongHolder<MyFavouriteVeryLongClass>(),
-            SomeOtherInterface,
-            AndAnotherOne {
-        
-            fun foo() { /*...*/ }
-        }
-       ```
-       <br>
   * **함수(Functions)**
    * 함수 서명이 한 줄에 들어가지 않으면 각 매개변수 선언을 한 줄에 하나씩 표시
    * 이 형식으로 정의된 매개변수에서는 단일 들여쓰기(+4)를 사용해야하며, 닫는 괄호(```)```) 및 반환 유형은 추가 들여쓰기 없이 한 줄에 하나씩 입력
