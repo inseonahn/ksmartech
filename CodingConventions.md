@@ -114,7 +114,6 @@ Kotlin 공식 문서의 [Coding Convention](https://kotlinlang.org/docs/coding-c
       }
       ```
     * 아직 Android 런타임에서는 지원되지 않는다.
-<br>
 
 ## 2.Formatting
   ```IntelliJ``` 에서 코드 컨벤션을 설정 방법.
@@ -124,8 +123,7 @@ Kotlin 공식 문서의 [Coding Convention](https://kotlinlang.org/docs/coding-c
    4. ```Code Style``` -> ```Kotlin``` 상단 ```Scheme``` 에서 Default만 되어있는 경우 Project에 적용이 안될 수 있으니 둘다(Default, Project) ```Kotlin style guid``` 설정
    5. ```Editor``` -> ```Inspections``` 메뉴에 진입한 뒤 ```Kotlin``` -> ```Style Issues``` -> ```File is not formatted according to project settings``` 항목 체크.
 
-   맥 : ```command(⌘)``` + ```option(⌥)``` + ```L```
-   윈도우 : ```Ctrl``` + ```Alt``` + ```L```
+   단축키 (맥 : ```command(⌘)``` + ```option(⌥)``` + ```L```, 윈도우 : ```Ctrl``` + ```Alt``` + ```L```)를 통해
    선택 영역 / 전체 코드를 reformat 가능
 
   * ### 2.1 들여쓰기(Indentation)
