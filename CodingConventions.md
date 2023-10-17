@@ -1,5 +1,5 @@
 Kotlin 공식 문서의 [Coding Convention](https://kotlinlang.org/docs/coding-conventions.html)과 
-<a href="https://developer.android.com/kotlin/style-guide?hl=ko" target="_blank">Android Kotlin Guides</a>을 한글로 번역하고 필요한 개념을 함께 정리한 내용입니다.
+[Android Kotlin Guides](https://developer.android.com/kotlin/style-guide?hl=ko)을 한글로 번역하고 필요한 개념을 함께 정리한 내용입니다.
 
 ## 1. Naming rules
   * 클래스의 이름은 명사 또는 명사구로 작성한다. ex) ```List```, ```PersonReader```
