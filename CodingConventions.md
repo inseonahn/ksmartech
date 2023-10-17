@@ -5,7 +5,7 @@ Kotlin 공식 문서의 [Coding Convention](https://kotlinlang.org/docs/coding-c
   * 클래스의 이름은 명사 또는 명사구로 작성한다. ex) ```List```, ```PersonReader```
   * 메소드의 이름은 동사 또는 동사구로 작성한다. ex) ```close```, ```readPersons```,```sort```, ```sorted```
   * 이름은 목적이 명확하게 나타나야하므로 의미 없는 단어(```Manager```, ```Wrapper``` 등)를 사용하는 것은 피하자.
-  * 이름에 약어를 사용하는 경우 두 개의 문자(```IOStream```)일 때는 둘 다 대문자로 표기하고 그보다 더 긴 경우(```XmlFormatter```, ```HttpInputStream```) 파스칼 표기법(```Pascal Case```)으로 작성하자. 
+  * 이름에 약어를 사용하는 경우 두 개의 문자(```IOStream```)일 때는 둘 다 대문자로 표기하고 그보다 더 긴 경우(```XmlFormatter```, ```HttpInputStream```) 파스칼 표기법(```Pascal Case```)으로 작성한다. 
 
   * ### 1.1 Source files
     * 소스 파일 이름은 파스칼 표기법(```Pascal Case```)을 따른다.
@@ -117,9 +117,16 @@ Kotlin 공식 문서의 [Coding Convention](https://kotlinlang.org/docs/coding-c
 <br>
 
 ## 2.Formatting
-*Google kotlin code Style 적용.
- - 옵션 > Editor > Code Style > Kotlin > 우측 set from > kotlin style guide click
- - 옵션 > Editor > Inspections > Style issues >  File is not formatted according to project settings ( click to the check box )
+  ```IntelliJ``` 에서 코드 컨벤션을 설정 방법.
+   1. IntelliJ 설정창(```command(⌘)``` + ```,```)을 열어 상단 검색창 ```Kotlin```을 입력
+   2. ```Code Style``` -> ```Kotlin```을 선택 후 오른쪽 상단에 있는 ```Set from..```을 선택
+   3. ```Kotlin style guide```를 선택
+   4. ```Code Style``` -> ```Kotlin``` 상단 ```Scheme``` 에서 Default만 되어있는 경우 Project에 적용이 안될 수 있으니 둘다(Default, Project) ```Kotlin style guid``` 설정
+   5. ```Editor``` -> ```Inspections``` 메뉴에 진입한 뒤 ```Kotlin``` -> ```Style Issues``` -> ```File is not formatted according to project settings``` 항목 체크.
+
+   맥 : ```command(⌘)``` + ```option(⌥)``` + ```L```
+   윈도우 : ```Ctrl``` + ```Alt``` + ```L```
+   선택 영역 / 전체 코드를 reformat 가능
 
   * ### 2.1 들여쓰기(Indentation)
     * 들여쓰기에 탭(```tab```)을 사용하지 않고, ```4spaces```를 사용하길 권장한다.
