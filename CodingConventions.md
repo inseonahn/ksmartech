@@ -4,7 +4,7 @@ Kotlin 공식 문서의 [Coding Convention](https://kotlinlang.org/docs/coding-c
 ## 1. Naming rules
   * 클래스의 이름은 명사 또는 명사구로 작성한다. ex) ```List```, ```PersonReader```
   * 메소드의 이름은 동사 또는 동사구로 작성한다. ex) ```close```, ```readPersons```,```sort```, ```sorted```
-  * 이름은 목적이 명확하게 나타나야하므로 의미 없는 단어(```Manager```, ```Wrapper``` 등)를 사용하는 것은 피하자.
+  * 이름은 목적이 명확하게 나타나야하므로 의미 없는 단어(```Manager```, ```Wrapper``` 등)를 사용하지 않는다.
   * 이름에 약어를 사용하는 경우 두 개의 문자(```IOStream```)일 때는 둘 다 대문자로 표기하고 그보다 더 긴 경우(```XmlFormatter```, ```HttpInputStream```) 파스칼 표기법(```Pascal Case```)으로 작성한다. 
 
   * ### 1.1 Source files
